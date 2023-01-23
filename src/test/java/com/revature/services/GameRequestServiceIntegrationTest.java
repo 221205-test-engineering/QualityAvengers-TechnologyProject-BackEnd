@@ -6,6 +6,7 @@ import com.uni.entities.Game;
 import com.uni.entities.GameRequest;
 import com.uni.services.GameRequestImpl;
 import com.uni.services.GameRequestService;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,23 +46,29 @@ public class GameRequestServiceIntegrationTest {
     @DisplayName("Create request")
     @Test
     public void createRequest(){
-        GameRequest test = new GameRequest(5, 1, 5, "Main Campus Gym: Court 1", "season 1");
-        
+        GameRequest test = new GameRequest(1, 1, 1, "Main Campus Gym: Court 1", "season 1");
+        GameRequest actual = gameRequestService.createRequest(test);
+        assertEquals(test,actual);
     }
 
-    // not finished yet
+    // work on this
     @DisplayName("Delete request")
     @Test
     public void deleteRequest(){
-        gameRequestDAO.delete(5,5);
+        gameRequestDAO.delete(3,1);
         //
+        //Assert.assertNull(gameRequestService.getAllGamesAndReferees());
+        assertEquals(1, gameRequestService.getAllGamesAndReferees().size());
     }
 
     @DisplayName("Get all games and referees")
     @Test
     public void getAllGamesAndReferees(){
         List<GameRequest> actual = gameRequestService.getAllGamesAndReferees();
-        assertEquals(4, actual.size());
+        /*Game test = new Game(1, "Main Campus Gym: Court 1", "season 1", "Grand Dunk Railroad", "The Ballers",
+                             0, 0, 0, "scheduled");*/
+
+        assertEquals(1, actual.size());
     }
 
 

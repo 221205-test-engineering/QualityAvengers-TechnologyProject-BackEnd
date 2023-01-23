@@ -57,6 +57,26 @@ public class ConnectionUtil {
 
         String insertUserSql = "insert into im_user (username, password, role, height, weight, profile_pic, display_biometrics) values (?, ?, ?::im_role, ?, ?, ?, ?)";
 
+        String gameRequestTableSql = "create table game_requests(\n" +
+                                     "game_request_id serial primary key,\n" +
+                                     "game int,\n" +
+                                     "user_id int)";
+
+        String insertGameRequest = "insert into game_requests (game, user_id) values (?,?)";
+
+        String gameTableSql = "create table game(\n" +
+                              "game_id serial primary key,\n" +
+                              "venue varchar,\n" +
+                              "season varchar,\n" +
+                              "home_team varchar,\n" +
+                              "away_team varchar,\n" +
+                              "home_score int,\n" +
+                              "away_score int,\n" +
+                              "game_start int,\n" +
+                              "game_outcome varchar)";
+
+        String insertGame = "insert into game (venue, season, home_team, away_team, home_score, away_score, game_start, game_outcome) values (?,?,?,?,?,?,?,?)";
+
         try {
             PreparedStatement ps1 = conn.prepareStatement(imRoleSql); // Create im_role enum
             ps1.executeUpdate();
@@ -93,6 +113,29 @@ public class ConnectionUtil {
             ps5.setString(6, null);
             ps5.setBoolean(7, true);
             ps5.executeUpdate();
+
+            PreparedStatement ps6 = conn.prepareStatement(gameRequestTableSql); // create gameRequestTable
+            ps6.executeUpdate();
+
+            PreparedStatement ps7 = conn.prepareStatement(insertGameRequest); // create game request
+            ps7.setInt(1, 1);
+            ps7.setInt(2, 1);
+            ps7.executeUpdate();
+
+            PreparedStatement ps8 = conn.prepareStatement(gameTableSql); // create gameTable
+            ps8.executeUpdate();
+
+            PreparedStatement ps9 = conn.prepareStatement(insertGame); // create game
+            ps9.setString(1,"Main Campus Gym: Court 1");
+            ps9.setString(2, "season 1");
+            ps9.setString(3, "Grand Dunk Railroad");
+            ps9.setString(4, "The Ballers");
+            ps9.setInt(5, 0);
+            ps9.setInt(6, 0);
+            ps9.setInt(7, 0);
+            ps9.setString(8, "scheduled");
+            ps9.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
